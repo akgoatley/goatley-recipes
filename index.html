@@ -7,43 +7,84 @@
 <title>Goatley Recipes</title>
 
 <style type="text/css">
-	/* ---- Front page ---- */
-	body {font-family: Georgia, "Times New Roman", serif; background: #fbf8f3; color: #2b2622; margin: 0; padding: 1.5em 1em 3em;}
-	main {max-width: 46em; margin: 0 auto;}
-	header.front {display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75em; border-bottom: 2px solid #2b2622; padding-bottom: 0.75em; margin-bottom: 1em;}
-	header.front h1 {margin: 0; font-size: 2em;}
-	.toolbar {display: flex; flex-wrap: wrap; gap: 0.5em; margin-bottom: 1em;}
-	#filter {flex: 1; min-width: 12em; font: inherit; padding: 0.35em 0.6em; border: 1px solid #b9ada0; border-radius: 4px; background: #fff;}
-	button, input[type=button] {font: inherit; font-size: 0.95em; cursor: pointer;}
-	button.primary {background: #7a3b1d; color: #fff; border: 0; border-radius: 4px; padding: 0.45em 1em;}
-	button.primary:hover {background: #5e2c14;}
-	button.plain {background: #fff; border: 1px solid #b9ada0; border-radius: 4px; padding: 0.35em 0.8em;}
+	/* Goatley Recipes: "kitchen notebook" style in navy. Shared tokens with zz-recipe-style.css. */
+	:root {
+		--paper: #f8f7f3; --card: #ffffff; --ink: #1c2433; --navy: #1f3a68; --navy-dark: #132748;
+		--muted: #5b6475; --line: #c3c9d4; --line-soft: #dde1e8; --backdrop: rgba(28, 42, 69, 0.88);
+		--display: "Fraunces", Georgia, serif; --body: "Source Serif 4", Georgia, serif; --mono: "IBM Plex Mono", Consolas, monospace;
+	}
+	* {box-sizing: border-box;}
+	body {margin: 0; background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 16px;}
+	main {max-width: 908px; margin: 0 auto; padding: 48px 24px 64px; display: flex; flex-direction: column; gap: 24px;}
+	button, input, select, textarea {font: inherit; color: inherit;}
+	button, input[type=button] {cursor: pointer;}
+	.visually-hidden {position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;}
 
-	/* Recipe tree */
-	#recipeTree details {margin: 0.2em 0;}
-	#recipeTree summary {cursor: pointer; font-weight: bold; font-size: 1.15em; padding: 0.3em 0; list-style: none;}
+	/* ---- Front page ---- */
+	header.front {display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px; border-bottom: 2px solid var(--navy); padding-bottom: 18px;}
+	header.front .eyebrow {display: block; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px;}
+	header.front h1 {margin: 0; font-family: var(--display); font-weight: 700; font-size: clamp(36px, 7vw, 52px); line-height: 1; color: var(--navy);}
+	.pill {min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1px solid var(--line); background: transparent; font-size: 15px;}
+	.pill:hover {border-color: var(--navy);}
+	.pill.primary {background: var(--navy); border-color: var(--navy); color: #fff; font-weight: 600; font-size: 16px; padding: 0 24px; display: inline-flex; align-items: center; gap: 8px;}
+	.pill.primary:hover {background: var(--navy-dark);}
+	.toolbar {display: flex; flex-wrap: wrap; gap: 10px;}
+	#filter {flex: 1; min-width: 12em; min-height: 44px; padding: 0 16px; border: 1px solid var(--line); border-radius: 999px; background: var(--card); font-size: 16px;}
+
+	/* Recipe tree: recipes run down each column, then on to the next */
+	#recipeTree details {margin: 0 0 6px;}
+	#recipeTree summary {cursor: pointer; list-style: none; display: flex; align-items: baseline; gap: 10px; padding: 6px 0; font-family: var(--display); font-size: 26px; font-weight: 500; color: var(--navy);}
 	#recipeTree summary::-webkit-details-marker {display: none;}
-	#recipeTree summary::before {content: "\25B8"; display: inline-block; width: 1.1em; transition: transform 0.15s;}
-	#recipeTree details[open] > summary::before {transform: rotate(90deg);}
-	#recipeTree .count {font-weight: normal; font-size: 0.8em; color: #7d7268; margin-left: 0.4em;}
-	#recipeTree ul.recipes {list-style: none; margin: 0 0 0.6em 0.45em; padding: 0 0 0 1.1em; border-left: 1px solid #cdbfb1;}
-	#recipeTree ul.recipes li {position: relative; padding: 0.15em 0;}
-	#recipeTree ul.recipes li::before {content: ""; position: absolute; left: -1.1em; top: 0.85em; width: 0.8em; border-top: 1px solid #cdbfb1;}
-	#recipeTree a {color: #7a3b1d; text-decoration: none;}
-	#recipeTree a:hover {text-decoration: underline;}
-	#noMatches {display: none; color: #7d7268; font-style: italic;}
+	#recipeTree summary::before {content: ""; width: 8px; height: 8px; border-right: 2px solid var(--navy); border-bottom: 2px solid var(--navy); transform: translateY(-4px) rotate(-45deg); transition: transform 0.15s; margin-right: 4px;}
+	#recipeTree details[open] > summary::before {transform: translateY(-6px) rotate(45deg);}
+	#recipeTree .count {font-family: var(--body); font-size: 15px; color: var(--muted);}
+	#recipeTree ul.recipes {list-style: none; margin: 4px 0 10px 6px; padding: 0 0 0 22px; border-left: 1px dashed var(--line); columns: 3 14em; column-gap: 24px; font-size: 15.5px;}
+	#recipeTree ul.recipes li {break-inside: avoid; padding: 2px 0;}
+	#recipeTree a {color: var(--navy); text-decoration: none;}
+	#recipeTree a:hover {color: var(--navy-dark); text-decoration: underline;}
+	#noMatches {display: none; color: var(--muted); font-style: italic;}
 
 	/* ---- Recipe builder popout ---- */
-	dialog#builder {width: 95vw; max-width: 95vw; height: 92vh; max-height: 92vh; box-sizing: border-box; padding: 1em 1.25em; border: 1px solid #2b2622; border-radius: 6px; font-family: sans-serif; font-size: 0.95em;}
-	dialog#builder::backdrop {background: rgba(30, 20, 10, 0.55);}
-	dialog#builder .builderHead {display: flex; justify-content: space-between; align-items: center;}
-	dialog#builder h1 {margin: 0 0 0.5em 0;}
-	dialog#builder .hint {color: #6b625a; font-size: 0.9em; margin: 0.5em 0;}
-	input.rStep {width: 90%;}
+	dialog#builder {width: min(1020px, 95vw); max-width: 95vw; height: 92vh; max-height: 92vh; padding: 28px 36px; border: 0; border-radius: 18px; background: var(--paper); color: var(--ink);}
+	dialog#builder[open] {display: flex; flex-direction: column; gap: 16px;}
+	dialog#builder::backdrop {background: var(--backdrop);}
+	.builderHead {display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--navy); padding-bottom: 14px;}
+	.builderHead h1 {margin: 0; font-family: var(--display); font-size: 34px; font-weight: 700; color: var(--navy);}
+	.iconButton {width: 44px; height: 44px; border-radius: 999px; border: 1px solid var(--line); background: transparent; display: flex; align-items: center; justify-content: center;}
+	.builderBody {flex: 1; min-height: 0; display: grid; grid-template-columns: 1.4fr 1fr; gap: 28px;}
+	#builderArea {overflow-y: auto; padding-right: 6px; display: flex; flex-direction: column; gap: 10px; font-size: 15px;}
+	.fields {display: grid; grid-template-columns: 80px 1fr; gap: 8px 12px; align-items: center;}
+	.fields label {color: var(--muted);}
+	#builder input[type=text], #builder select {padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); font-size: 15px; width: 100%; min-width: 0;}
+	#builder select {width: 200px;}
+	#rTitle {font-family: var(--display) !important; font-weight: 600; font-size: 20px !important; color: var(--navy);}
+	#rNotes {font-style: italic;}
+	#builder h2 {margin: 8px 0 0; font-family: var(--display); font-size: 20px; font-weight: 500; color: var(--navy);}
+	#rIngredients, #rMethod {display: flex; flex-direction: column; gap: 6px; counter-reset: step;}
+	.ingredRow {display: grid; grid-template-columns: 110px 1fr 32px; gap: 8px; align-items: center;}
+	.stepRow {display: grid; grid-template-columns: 28px 1fr 32px; gap: 8px; align-items: center;}
+	.stepRow::before {counter-increment: step; content: counter(step); font-family: var(--display); font-size: 18px; color: var(--navy);}
+	.ingredRow input[type=button], .stepRow input[type=button] {order: 3; border: 0; background: transparent; color: var(--muted); font-size: 18px; height: 32px;}
+	.ingredRow input[type=button]:hover, .stepRow input[type=button]:hover {color: var(--navy);}
+	.addRow {align-self: flex-start; border: 0; background: transparent; padding: 4px 0; font-weight: 600; font-size: 14px; color: var(--navy);}
+	.previewCol {display: flex; flex-direction: column; gap: 8px; min-height: 0;}
+	.previewCol label {font-size: 14px; color: var(--muted);}
+	#output {flex: 1; resize: none; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px; font: 12.5px/1.55 var(--mono); color: #2c3444;}
+	.hint {margin: 0; font-size: 13px; color: var(--muted);}
+	.builderFoot {display: flex; flex-wrap: wrap; align-items: center; gap: 10px; border-top: 1px solid var(--line-soft); padding-top: 16px;}
+	.builderFoot .spacer {flex: 1;}
+	.textButton {border: 0; background: transparent; color: var(--muted); min-height: 44px; padding: 0 8px; font-size: 15px;}
+	.textButton:hover {color: var(--navy);}
 	a#hiddenAnchor {display: none;}
-	input.ingredQ {width: 20%}
-	input.ingredN {width: 70%}
+	@media (max-width: 760px) {
+		dialog#builder {padding: 20px; height: 96vh; max-height: 96vh;}
+		.builderBody {grid-template-columns: 1fr; overflow-y: auto;}
+		#builderArea {overflow: visible;}
+		#output {min-height: 240px;}
+	}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono&display=swap">
 
 <script type="text/javascript">
 function Recipate() {
@@ -87,7 +128,8 @@ function buildIngredRow() {
 	newRow.className="ingredRow";
 	var newMinus = document.createElement("input");
 	newMinus.type="button";
-	newMinus.value="x";
+	newMinus.value="×";
+	newMinus.setAttribute("aria-label", "Remove ingredient");
 	newMinus.onclick= function() {dropRow(this);};
 	newRow.appendChild(newMinus);
 	var newQ = document.createElement("input");
@@ -113,7 +155,8 @@ function buildStepRow() {
 	newRow.className="stepRow";
 	var newMinus = document.createElement("input");
 	newMinus.type="button";
-	newMinus.value="x";
+	newMinus.value="×";
+	newMinus.setAttribute("aria-label", "Remove step");
 	newMinus.onclick= function() {dropRow(this);};
 	newRow.appendChild(newMinus);
 	var newS = document.createElement("input");
@@ -189,7 +232,8 @@ function addLinkToTree(doc, folder, name) {
 		ul.insertBefore(li, tail);
 		}
 	var count = ul.parentNode.querySelector(".count");
-	if (count) {count.textContent = "(" + ul.querySelectorAll(":scope > li").length + ")";}
+	var n = ul.querySelectorAll(":scope > li").length;
+	if (count) {count.textContent = n + (n == 1 ? " recipe" : " recipes");}
 	return true;
 	}
 
@@ -258,19 +302,22 @@ function setupPage() {
 <body onload="setupPage();">
 <main>
 	<header class="front">
-		<h1>Goatley Recipes</h1>
-		<button type="button" class="primary" onclick="openBuilder();">Build a recipe</button>
+		<div>
+			<span class="eyebrow">The family recipe book</span>
+			<h1>Goatley Recipes</h1>
+		</div>
+		<button type="button" class="pill primary" onclick="openBuilder();"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 2v12M2 8h12"></path></svg>Build a recipe</button>
 	</header>
 
 	<div class="toolbar">
 		<input type="search" id="filter" placeholder="Search recipes…" oninput="filterRecipes();" aria-label="Search recipes">
-		<button type="button" class="plain" onclick="setAllFolders(true);">Expand all</button>
-		<button type="button" class="plain" onclick="setAllFolders(false);">Collapse all</button>
+		<button type="button" class="pill" onclick="setAllFolders(true);">Expand all</button>
+		<button type="button" class="pill" onclick="setAllFolders(false);">Collapse all</button>
 	</div>
 
 	<nav id="recipeTree">
 	<details data-folder="Meals">
-		<summary>Meals<span class="count">(37)</span></summary>
+		<summary>Meals <span class="count">37 recipes</span></summary>
 		<ul class="recipes" data-folder="Meals">
 			<li><a href="Meals/Baked%20beans.xml">Baked beans</a></li>
 			<li><a href="Meals/Balinese%20chicken%20curry.xml">Balinese chicken curry</a></li>
@@ -312,7 +359,7 @@ function setupPage() {
 		</ul>
 	</details>
 	<details data-folder="Other">
-		<summary>Other<span class="count">(11)</span></summary>
+		<summary>Other <span class="count">11 recipes</span></summary>
 		<ul class="recipes" data-folder="Other">
 			<li><a href="Other/Bagel-ish.xml">Bagel-ish</a></li>
 			<li><a href="Other/Baked%20oats.xml">Baked oats</a></li>
@@ -328,7 +375,7 @@ function setupPage() {
 		</ul>
 	</details>
 	<details data-folder="Slow cooker">
-		<summary>Slow cooker<span class="count">(7)</span></summary>
+		<summary>Slow cooker <span class="count">7 recipes</span></summary>
 		<ul class="recipes" data-folder="Slow cooker">
 			<li><a href="Slow%20cooker/Beef%20rendang.xml">Beef rendang</a></li>
 			<li><a href="Slow%20cooker/Bolognese.xml">Bolognese</a></li>
@@ -340,7 +387,7 @@ function setupPage() {
 		</ul>
 	</details>
 	<details data-folder="Sweet">
-		<summary>Sweet<span class="count">(22)</span></summary>
+		<summary>Sweet <span class="count">22 recipes</span></summary>
 		<ul class="recipes" data-folder="Sweet">
 			<li><a href="Sweet/ANZAC%20slice.xml">ANZAC slice</a></li>
 			<li><a href="Sweet/Apple%20cake.xml">Apple cake</a></li>
@@ -372,48 +419,49 @@ function setupPage() {
 
 <dialog id="builder">
 <div class="builderHead">
-	<h1>Build Recipe</h1>
-	<button type="button" class="plain" onclick="document.getElementById('builder').close();">Close</button>
+	<h1>Build a recipe</h1>
+	<button type="button" class="iconButton" aria-label="Close" onclick="document.getElementById('builder').close();"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"></path></svg></button>
 </div>
 <a id="hiddenAnchor"></a>
-
-<input type="button" onclick="Recipate();" value="Produce recipe file" />
-<input type="button" onclick="saveRecipe();" value="Download recipe file" />
-<input type="button" onclick="downloadUpdatedIndex();" value="Download updated index" />
-<input type="button" onclick="clearRecipe();" value="Clear everything" />
 <p class="hint">To add the recipe to the collection: put the downloaded recipe file in the chosen folder, and replace <code>index.html</code> with the downloaded updated index.</p>
 
-<table style="width: 100%; border-spacing: 1em; height: calc(100% - 9em)">
-<tr style="width: 100%; height: 100%">
-<td style="width: 58%; vertical-align: top">
-<div id="builderArea" style="width: 100%; height: 100%">
-	Folder:<select id="rFolder"></select><br/>
-	<b>Title:</b><input type="text" id="rTitle" style="width: 80%; font-weight: bold"></input><br/>
-	<i>Notes:</i><input type="text" id="rNotes" style="width: 80%; font-style: italic"></input><br/>
-	Serves:<input type="text" id="rServes" style="width: 80%;"></input><br/>
-	Prep:<input type="text" id="rPrep" style="width: 80%;"></input><br/><br/>
-	Ingredients (quantity, then name):
+<div class="builderBody">
+<div id="builderArea">
+	<div class="fields">
+		<label for="rFolder">Folder</label><select id="rFolder"></select>
+		<label for="rTitle">Title</label><input type="text" id="rTitle">
+		<label for="rNotes">Notes</label><input type="text" id="rNotes">
+		<label for="rServes">Serves</label><input type="text" id="rServes">
+		<label for="rPrep">Prep</label><input type="text" id="rPrep">
+	</div>
+	<h2>Ingredients <span class="hint">(quantity, then name)</span></h2>
 	<div id="rIngredients">
 		<div class="ingredRow">
-			<input type="button" onclick="dropRow(this);" value="x" /><input type="text" class="ingredQ"/><input type="text" class="ingredN" />
-			</div>
-		</div>
-	<input type="button" onclick="addIngred();" value="Add another ingredient" /><br/><br/>
-	Method:
-	<div id="rMethod">
-		<div class="stepRow">
-			<input type="button" onclick="dropRow(this);" value="x" /><input type="text" class="rStep"/>
+			<input type="button" onclick="dropRow(this);" value="×" aria-label="Remove ingredient" /><input type="text" class="ingredQ" aria-label="Quantity"/><input type="text" class="ingredN" aria-label="Ingredient" />
 		</div>
 	</div>
-<input type="button" onclick="addStep();" value="Add another step" />
+	<button type="button" class="addRow" onclick="addIngred();">+ Add ingredient</button>
+	<h2>Method</h2>
+	<div id="rMethod">
+		<div class="stepRow">
+			<input type="button" onclick="dropRow(this);" value="×" aria-label="Remove step" /><input type="text" class="rStep" aria-label="Step"/>
+		</div>
+	</div>
+	<button type="button" class="addRow" onclick="addStep();">+ Add step</button>
 </div>
-</td>
-<td style="width:38%; cellspacing: 1em">
-<textarea id="output" style="width: 100%; height: 100%">
-</textarea>
-</td>
-</tr>
-</table>
+<div class="previewCol">
+	<label for="output">Recipe file preview</label>
+	<textarea id="output"></textarea>
+</div>
+</div>
+
+<div class="builderFoot">
+	<button type="button" class="textButton" onclick="clearRecipe();">Clear everything</button>
+	<span class="spacer"></span>
+	<button type="button" class="pill" onclick="Recipate();">Produce recipe file</button>
+	<button type="button" class="pill" onclick="saveRecipe();">Download recipe file</button>
+	<button type="button" class="pill primary" onclick="downloadUpdatedIndex();">Download updated index</button>
+</div>
 </dialog>
 
 </body>
