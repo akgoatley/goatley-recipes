@@ -62,8 +62,8 @@
 	#builder h2 {margin: 8px 0 0; font-family: var(--display); font-size: 20px; font-weight: 500; color: var(--navy);}
 	#rIngredients, #rMethod {display: flex; flex-direction: column; gap: 6px; counter-reset: step;}
 	.ingredRow {display: grid; grid-template-columns: 110px 1fr 32px; gap: 8px; align-items: center;}
-	.stepRow {display: grid; grid-template-columns: 28px 1fr 32px; gap: 8px; align-items: center;}
-	.stepRow::before {counter-increment: step; content: counter(step); font-family: var(--display); font-size: 18px; color: var(--navy);}
+	.stepRow {display: grid; grid-template-columns: 24px 1fr 32px; gap: 8px; align-items: center;}
+	.stepRow::before {counter-increment: step; content: counter(step); font-family: var(--display); font-size: 15px; color: var(--navy);}
 	.ingredRow input[type=button], .stepRow input[type=button] {order: 3; border: 0; background: transparent; color: var(--muted); font-size: 18px; height: 32px;}
 	.ingredRow input[type=button]:hover, .stepRow input[type=button]:hover {color: var(--navy);}
 	.addRow {align-self: flex-start; border: 0; background: transparent; padding: 4px 0; font-weight: 600; font-size: 14px; color: var(--navy);}
