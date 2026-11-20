@@ -1,17 +1,52 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
 <head>
-<title>Build Recipe</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Goatley Recipes</title>
 
 <style type="text/css">
+	/* ---- Front page ---- */
+	body {font-family: Georgia, "Times New Roman", serif; background: #fbf8f3; color: #2b2622; margin: 0; padding: 1.5em 1em 3em;}
+	main {max-width: 46em; margin: 0 auto;}
+	header.front {display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75em; border-bottom: 2px solid #2b2622; padding-bottom: 0.75em; margin-bottom: 1em;}
+	header.front h1 {margin: 0; font-size: 2em;}
+	.toolbar {display: flex; flex-wrap: wrap; gap: 0.5em; margin-bottom: 1em;}
+	#filter {flex: 1; min-width: 12em; font: inherit; padding: 0.35em 0.6em; border: 1px solid #b9ada0; border-radius: 4px; background: #fff;}
+	button, input[type=button] {font: inherit; font-size: 0.95em; cursor: pointer;}
+	button.primary {background: #7a3b1d; color: #fff; border: 0; border-radius: 4px; padding: 0.45em 1em;}
+	button.primary:hover {background: #5e2c14;}
+	button.plain {background: #fff; border: 1px solid #b9ada0; border-radius: 4px; padding: 0.35em 0.8em;}
+
+	/* Recipe tree */
+	#recipeTree details {margin: 0.2em 0;}
+	#recipeTree summary {cursor: pointer; font-weight: bold; font-size: 1.15em; padding: 0.3em 0; list-style: none;}
+	#recipeTree summary::-webkit-details-marker {display: none;}
+	#recipeTree summary::before {content: "\25B8"; display: inline-block; width: 1.1em; transition: transform 0.15s;}
+	#recipeTree details[open] > summary::before {transform: rotate(90deg);}
+	#recipeTree .count {font-weight: normal; font-size: 0.8em; color: #7d7268; margin-left: 0.4em;}
+	#recipeTree ul.recipes {list-style: none; margin: 0 0 0.6em 0.45em; padding: 0 0 0 1.1em; border-left: 1px solid #cdbfb1;}
+	#recipeTree ul.recipes li {position: relative; padding: 0.15em 0;}
+	#recipeTree ul.recipes li::before {content: ""; position: absolute; left: -1.1em; top: 0.85em; width: 0.8em; border-top: 1px solid #cdbfb1;}
+	#recipeTree a {color: #7a3b1d; text-decoration: none;}
+	#recipeTree a:hover {text-decoration: underline;}
+	#recipeTree .fmt {font-size: 0.75em; color: #7d7268; margin-left: 0.3em;}
+	#noMatches {display: none; color: #7d7268; font-style: italic;}
+
+	/* ---- Recipe builder popout ---- */
+	dialog#builder {width: 95vw; max-width: 95vw; height: 92vh; max-height: 92vh; box-sizing: border-box; padding: 1em 1.25em; border: 1px solid #2b2622; border-radius: 6px; font-family: sans-serif; font-size: 0.95em;}
+	dialog#builder::backdrop {background: rgba(30, 20, 10, 0.55);}
+	dialog#builder .builderHead {display: flex; justify-content: space-between; align-items: center;}
+	dialog#builder h1 {margin: 0 0 0.5em 0;}
+	dialog#builder .hint {color: #6b625a; font-size: 0.9em; margin: 0.5em 0;}
 	input.rStep {width: 90%;}
 	a#hiddenAnchor {display: none;}
 	input.ingredQ {width: 20%}
 	input.ingredN {width: 70%}
 </style>
 
-<script type="text/javascript"> 
+<script type="text/javascript">
 function Recipate() {
 	var output="";
 	output="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?xml-stylesheet type=\"text/css\" href=\"zz-recipe-style.css\"?>\n\n<recipe>\n"
@@ -93,18 +128,123 @@ function dropRow(buttonElem) {
 	buttonElem.parentNode.remove();
 	}
 
-function saveRecipe() {
-	var rText = document.getElementById("output").value;
-	var myBlob = new Blob([rText], {type: "text/xml;charset=utf-8"});
+// File name for a recipe: its title, minus characters that aren't allowed in file names.
+function recipeFileStem() {
+	return document.getElementById("rTitle").value.trim().replace(/[\\\/:*?"<>|]/g, "-");
+	}
+
+function downloadText(text, mimeType, fileName) {
+	var myBlob = new Blob([text], {type: mimeType});
 	var blobUrl = window.URL.createObjectURL(myBlob);
 	var link = document.getElementById("hiddenAnchor");
 	link.href = blobUrl;
-	link.download = document.getElementById("rTitle").value + ".xml";
+	link.download = fileName;
 	link.click();
 	}
 
+function saveRecipe() {
+	if (!recipeFileStem()) {alert("Give the recipe a title first."); return;}
+	if (!document.getElementById("output").value) {Recipate();}
+	downloadText(document.getElementById("output").value, "text/xml;charset=utf-8", recipeFileStem() + ".xml");
+	}
+
+function clearRecipe() {
+	["rTitle", "rNotes", "rServes", "rPrep", "output"].forEach(function(id) {document.getElementById(id).value = "";});
+	var rIngreds = document.getElementById("rIngredients");
+	rIngreds.replaceChildren(buildIngredRow());
+	var rMethod = document.getElementById("rMethod");
+	rMethod.replaceChildren(buildStepRow());
+	document.getElementById("rTitle").focus();
+	}
+
+/* ---- Front page: recipe tree, search and updated-index download ---- */
+
+// Clean copy of this page's HTML, taken when the page loads (before anything is opened or typed),
+// so the downloaded index doesn't carry over the reader's open folders or the builder's contents.
+var baseIndexHtml = null;
+
+function recipeHref(folder, fileName) {
+	return encodeURIComponent(folder) + "/" + encodeURIComponent(fileName);
+	}
+
+// Adds a link to a recipe under its folder in the tree of the given document, in alphabetical order.
+// Returns false if that folder already lists a recipe with the same name.
+function addLinkToTree(doc, folder, name) {
+	var ul = doc.querySelector('ul.recipes[data-folder="' + CSS.escape(folder) + '"]');
+	if (!ul) {return false;}
+	var items = Array.from(ul.querySelectorAll(":scope > li"));
+	var collator = new Intl.Collator(undefined, {sensitivity: "base"});
+	if (items.some(function(li) {return collator.compare(li.querySelector("a").textContent, name) === 0;})) {return false;}
+	var li = doc.createElement("li");
+	var a = doc.createElement("a");
+	a.setAttribute("href", recipeHref(folder, name + ".xml"));
+	a.textContent = name;
+	li.appendChild(a);
+	var ref = items.find(function(item) {return collator.compare(item.querySelector("a").textContent, name) > 0;});
+	if (ref) {
+		ul.insertBefore(li, ref);
+		ul.insertBefore(doc.createTextNode("\n\t\t\t"), ref);
+		} else {
+		var tail = ul.lastChild;
+		ul.insertBefore(doc.createTextNode("\n\t\t\t"), tail);
+		ul.insertBefore(li, tail);
+		}
+	var count = ul.parentNode.querySelector(".count");
+	if (count) {count.textContent = "(" + ul.querySelectorAll(":scope > li").length + ")";}
+	return true;
+	}
+
+function downloadUpdatedIndex() {
+	var name = recipeFileStem();
+	if (!name) {alert("Give the recipe a title first."); return;}
+	var folder = document.getElementById("rFolder").value;
+	var doc = new DOMParser().parseFromString(baseIndexHtml, "text/html");
+	if (!addLinkToTree(doc, folder, name)) {
+		alert("\"" + name + "\" is already listed in " + folder + ".");
+		return;
+		}
+	var newHtml = "<!DOCTYPE html>\n\n" + doc.documentElement.outerHTML;
+	downloadText(newHtml, "text/html;charset=utf-8", "index.html");
+	// Show the new link on this page too, and keep it if another recipe is added before reloading.
+	baseIndexHtml = newHtml;
+	addLinkToTree(document, folder, name);
+	}
+
+function openBuilder() {
+	document.getElementById("builder").showModal();
+	document.getElementById("rTitle").focus();
+	}
+
+function filterRecipes() {
+	var query = document.getElementById("filter").value.trim().toLowerCase();
+	var anyShown = false;
+	document.querySelectorAll("#recipeTree details").forEach(function(details) {
+		var shownHere = 0;
+		details.querySelectorAll("li").forEach(function(li) {
+			var match = !query || li.textContent.toLowerCase().includes(query);
+			li.hidden = !match;
+			if (match) {shownHere++;}
+			});
+		details.hidden = shownHere === 0;
+		if (query && shownHere) {details.open = true;}
+		if (shownHere) {anyShown = true;}
+		});
+	document.getElementById("noMatches").style.display = anyShown ? "none" : "block";
+	}
+
+function setAllFolders(open) {
+	document.querySelectorAll("#recipeTree details").forEach(function(details) {details.open = open;});
+	}
+
 function setupPage() {
-	document.getElementById('rTitle').focus();
+	baseIndexHtml = "<!DOCTYPE html>\n\n" + document.documentElement.outerHTML;
+	// The folder dropdown lists every folder in the tree.
+	var folderSelect = document.getElementById("rFolder");
+	document.querySelectorAll("#recipeTree ul.recipes").forEach(function(ul) {
+		var option = document.createElement("option");
+		option.value = option.textContent = ul.dataset.folder;
+		folderSelect.appendChild(option);
+		});
 	window.addEventListener("keyup", (event) => {
 		if (event.key=="Enter") {
 			if (document.activeElement.className=="ingredN") {addIngred();}
@@ -117,17 +257,138 @@ function setupPage() {
 </head>
 
 <body onload="setupPage();">
-<h1>Build Recipe</h1>
+<main>
+	<header class="front">
+		<h1>Goatley Recipes</h1>
+		<button type="button" class="primary" onclick="openBuilder();">Build a recipe</button>
+	</header>
+
+	<div class="toolbar">
+		<input type="search" id="filter" placeholder="Search recipes…" oninput="filterRecipes();" aria-label="Search recipes">
+		<button type="button" class="plain" onclick="setAllFolders(true);">Expand all</button>
+		<button type="button" class="plain" onclick="setAllFolders(false);">Collapse all</button>
+	</div>
+
+	<nav id="recipeTree">
+	<details data-folder="Meals">
+		<summary>Meals<span class="count">(37)</span></summary>
+		<ul class="recipes" data-folder="Meals">
+			<li><a href="Meals/Baked%20beans.xml">Baked beans</a></li>
+			<li><a href="Meals/Balinese%20chicken%20curry.xml">Balinese chicken curry</a></li>
+			<li><a href="Meals/Beef%20burgers.xml">Beef burgers</a></li>
+			<li><a href="Meals/Beef%20dan%20dan.xml">Beef dan dan</a></li>
+			<li><a href="Meals/Beef%20pot%20roast.xml">Beef pot roast</a></li>
+			<li><a href="Meals/Beef%20shin%20ragu.xml">Beef shin ragu</a></li>
+			<li><a href="Meals/Butter%20chicken.xml">Butter chicken</a></li>
+			<li><a href="Meals/Chicken%20and%20spinach%20tikka%20masala.xml">Chicken and spinach tikka masala</a></li>
+			<li><a href="Meals/Chicken%20rissoles.xml">Chicken rissoles</a></li>
+			<li><a href="Meals/Chicken%20saagwala.xml">Chicken saagwala</a></li>
+			<li><a href="Meals/Corned%20beef.xml">Corned beef</a></li>
+			<li><a href="Meals/Creamy%20chicken%2C%20rice%20and%20vege%20soup.xml">Creamy chicken, rice and vege soup</a></li>
+			<li><a href="Meals/Creamy%20spinach%20and%20Parmesan%20orzo.xml">Creamy spinach and Parmesan orzo</a></li>
+			<li><a href="Meals/Cumin-spiced%20lamb%20leg%20with%20chopped%20Greek%20salad.xml">Cumin-spiced lamb leg with chopped Greek salad</a></li>
+			<li><a href="Meals/Curried%20sausages.xml">Curried sausages</a></li>
+			<li><a href="Meals/Dad%27s%20chorizo%20and%20tomato%20soup.xml">Dad's chorizo and tomato soup</a></li>
+			<li><a href="Meals/Devilled%20sausages.xml">Devilled sausages</a></li>
+			<li><a href="Meals/Eggplant%20and%20lentil%20lasagne.xml">Eggplant and lentil lasagne</a></li>
+			<li><a href="Meals/Frittata.xml">Frittata</a></li>
+			<li><a href="Meals/Israeli%20couscous.xml">Israeli couscous</a></li>
+			<li><a href="Meals/K%C5%ABmara-topped%20creamy%20chicken%20and%20vege%20pie.xml">Kūmara-topped creamy chicken and vege pie</a></li>
+			<li><a href="Meals/Lamb%2C%20feta%20and%20pasta%20salad.xml">Lamb, feta and pasta salad</a></li>
+			<li><a href="Meals/Lasagne.xml">Lasagne</a></li>
+			<li><a href="Meals/Lemon%20chicken%20stir-fry.xml">Lemon chicken stir-fry</a></li>
+			<li><a href="Meals/Lentil%2C%20tomato%20and%20ginger%20curry%20soup.xml">Lentil, tomato and ginger curry soup</a></li>
+			<li><a href="Meals/Masala%20fish%2C%20bok%20choy%2C%20mango%20salsa.xml">Masala fish, bok choy, mango salsa</a></li>
+			<li><a href="Meals/Meatloaf.xml">Meatloaf</a></li>
+			<li><a href="Meals/Mum%27s%20vegetable%20soup.xml">Mum's vegetable soup</a></li>
+			<li><a href="Meals/Paneer%20chickpea%20curry.xml">Paneer chickpea curry</a></li>
+			<li><a href="Meals/Pesto%20pasta%20with%20halloumi.xml">Pesto pasta with halloumi</a></li>
+			<li><a href="Meals/Rice%20and%20hoisin%20chicken%20salad.xml">Rice and hoisin chicken salad</a></li>
+			<li><a href="Meals/Roast%20chicken%20with%20lemon%2C%20tomatoes%20and%20olives.xml">Roast chicken with lemon, tomatoes and olives</a></li>
+			<li><a href="Meals/Roast%20pumpkin%20salad.xml">Roast pumpkin salad</a></li>
+			<li><a href="Meals/Salmon%20pie.xml">Salmon pie</a></li>
+			<li><a href="Meals/Spaghetti%20and%20meatballs.xml">Spaghetti and meatballs</a></li>
+			<li><a href="Meals/Sri%20Lankan%20chicken%20curry.xml">Sri Lankan chicken curry</a></li>
+			<li><a href="Meals/Tandoori%20chicken%20salad.xml">Tandoori chicken salad</a></li>
+		</ul>
+	</details>
+	<details data-folder="Other">
+		<summary>Other<span class="count">(11)</span></summary>
+		<ul class="recipes" data-folder="Other">
+			<li><a href="Other/Bagel-ish.xml">Bagel-ish</a></li>
+			<li><a href="Other/Baked%20oats.xml">Baked oats</a></li>
+			<li><a href="Other/Cheese%20puffs.xml">Cheese puffs</a></li>
+			<li><a href="Other/Cheese%20scones.xml">Cheese scones</a></li>
+			<li><a href="Other/Crispy%20chickpeas.xml">Crispy chickpeas</a></li>
+			<li><a href="Other/Cr%C3%AApes.xml">Crêpes</a></li>
+			<li><a href="Other/Fresh%20pasta.rtf">Fresh pasta</a> <span class="fmt">(RTF)</span></li>
+			<li><a href="Other/Lockdown%20loaf%20%28beer%20bread%29.xml">Lockdown loaf (beer bread)</a></li>
+			<li><a href="Other/Pizza%20dough.xml">Pizza dough</a></li>
+			<li><a href="Other/Satay%20sauce.xml">Satay sauce</a></li>
+			<li><a href="Other/Speedy%20corn%20or%20pea%20bread.xml">Speedy corn or pea bread</a></li>
+		</ul>
+	</details>
+	<details data-folder="Slow cooker">
+		<summary>Slow cooker<span class="count">(7)</span></summary>
+		<ul class="recipes" data-folder="Slow cooker">
+			<li><a href="Slow%20cooker/Beef%20rendang.xml">Beef rendang</a></li>
+			<li><a href="Slow%20cooker/Bolognese.xml">Bolognese</a></li>
+			<li><a href="Slow%20cooker/Mexican%20pulled%20beef.xml">Mexican pulled beef</a></li>
+			<li><a href="Slow%20cooker/Paprika%20chicken%20thighs.xml">Paprika chicken thighs</a></li>
+			<li><a href="Slow%20cooker/Shredded%20chicken.xml">Shredded chicken</a></li>
+			<li><a href="Slow%20cooker/Sticky%20cashew%20nut%20chicken.xml">Sticky cashew nut chicken</a></li>
+			<li><a href="Slow%20cooker/Tuscan%20chicken%20thighs.xml">Tuscan chicken thighs</a></li>
+		</ul>
+	</details>
+	<details data-folder="Sweet">
+		<summary>Sweet<span class="count">(22)</span></summary>
+		<ul class="recipes" data-folder="Sweet">
+			<li><a href="Sweet/ANZAC%20slice.xml">ANZAC slice</a></li>
+			<li><a href="Sweet/Apple%20cake.xml">Apple cake</a></li>
+			<li><a href="Sweet/Banana%20cake%2C%20lemon%20cream%20cheese%20icing.xml">Banana cake, lemon cream cheese icing</a></li>
+			<li><a href="Sweet/Banana%20muffins.xml">Banana muffins</a></li>
+			<li><a href="Sweet/Banana%20pikelets.xml">Banana pikelets</a></li>
+			<li><a href="Sweet/Blueberry%20muffins.xml">Blueberry muffins</a></li>
+			<li><a href="Sweet/Carrot%20and%20feijoa%20mini%20muffins.xml">Carrot and feijoa mini muffins</a></li>
+			<li><a href="Sweet/Chocolate%20brownie.xml">Chocolate brownie</a></li>
+			<li><a href="Sweet/Chocolate%20chunk%20oat%20cookies.xml">Chocolate chunk oat cookies</a></li>
+			<li><a href="Sweet/Chocolate%20mousse.xml">Chocolate mousse</a></li>
+			<li><a href="Sweet/Cranberry%2C%20chocolate%20and%20pumpkin%20seed%20cookies.xml">Cranberry, chocolate and pumpkin seed cookies</a></li>
+			<li><a href="Sweet/Ginger%20crinkle%20biscuits.xml">Ginger crinkle biscuits</a></li>
+			<li><a href="Sweet/Gingerbread%20men%2C%20royal%20icing.rtf">Gingerbread men, royal icing</a> <span class="fmt">(RTF)</span></li>
+			<li><a href="Sweet/Hazelnut%20choc%20chip%20cookies.rtf">Hazelnut choc chip cookies</a> <span class="fmt">(RTF)</span></li>
+			<li><a href="Sweet/Lemon%20tart.xml">Lemon tart</a></li>
+			<li><a href="Sweet/Meringues.xml">Meringues</a></li>
+			<li><a href="Sweet/Oaty%20caramel%20slice.xml">Oaty caramel slice</a></li>
+			<li><a href="Sweet/Oaty%20carrot%20hotcakes.xml">Oaty carrot hotcakes</a></li>
+			<li><a href="Sweet/Panforte.xml">Panforte</a></li>
+			<li><a href="Sweet/Pikelets.xml">Pikelets</a></li>
+			<li><a href="Sweet/Scones.rtf">Scones</a> <span class="fmt">(RTF)</span></li>
+			<li><a href="Sweet/White%20chocolate%20New%20York%20cheesecake.xml">White chocolate New York cheesecake</a></li>
+		</ul>
+	</details>
+	</nav>
+	<p id="noMatches">No recipes match that search.</p>
+</main>
+
+<dialog id="builder">
+<div class="builderHead">
+	<h1>Build Recipe</h1>
+	<button type="button" class="plain" onclick="document.getElementById('builder').close();">Close</button>
+</div>
 <a id="hiddenAnchor"></a>
 
 <input type="button" onclick="Recipate();" value="Produce recipe file" />
 <input type="button" onclick="saveRecipe();" value="Download recipe file" />
-<input type="button" onclick="location.reload();" value="Clear everything" />
+<input type="button" onclick="downloadUpdatedIndex();" value="Download updated index" />
+<input type="button" onclick="clearRecipe();" value="Clear everything" />
+<p class="hint">To add the recipe to the collection: put the downloaded recipe file in the chosen folder, and replace <code>index.html</code> with the downloaded updated index.</p>
 
-<table style="position: absolute; width: 98%; border-spacing: 1em; height: 80%">
+<table style="width: 100%; border-spacing: 1em; height: calc(100% - 9em)">
 <tr style="width: 100%; height: 100%">
-<td style="width: 58%">
+<td style="width: 58%; vertical-align: top">
 <div id="builderArea" style="width: 100%; height: 100%">
+	Folder:<select id="rFolder"></select><br/>
 	<b>Title:</b><input type="text" id="rTitle" style="width: 80%; font-weight: bold"></input><br/>
 	<i>Notes:</i><input type="text" id="rNotes" style="width: 80%; font-style: italic"></input><br/>
 	Serves:<input type="text" id="rServes" style="width: 80%;"></input><br/>
@@ -146,6 +407,7 @@ function setupPage() {
 		</div>
 	</div>
 <input type="button" onclick="addStep();" value="Add another step" />
+</div>
 </td>
 <td style="width:38%; cellspacing: 1em">
 <textarea id="output" style="width: 100%; height: 100%">
@@ -153,8 +415,7 @@ function setupPage() {
 </td>
 </tr>
 </table>
-
-
+</dialog>
 
 </body>
 </html>
