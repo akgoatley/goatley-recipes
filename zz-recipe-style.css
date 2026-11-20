@@ -128,11 +128,20 @@ s::before {
 	color: var(--navy);
 }
 
-@media (max-width: 700px) {
+/* Narrow screens: method goes below the ingredients.
+   max-width catches narrow browser windows. max-device-width catches phones: a recipe XML
+   file can't carry a viewport tag, so phones lay it out as if the screen were 980px wide. */
+@media (max-width: 700px), (max-device-width: 700px) {
 	recipe { grid-template-columns: minmax(0, 1fr); padding: 32px 16px 48px; }
 	method { grid-column: 1; }
 	title { font-size: 40px; }
 	method ~ title { font-size: 32px; }
+}
+
+/* On a phone laid out at that wide default width, scale the page up so text is readable
+   (2.5 × makes the 980px layout behave like a phone-width page). */
+@media (max-device-width: 700px) and (min-width: 701px) {
+	recipe { zoom: 2.5; }
 }
 
 @media print {
