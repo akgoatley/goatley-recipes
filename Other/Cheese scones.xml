@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Cheese scones</title>
+<notes>This recipe is from Sophie Gray ("Destitute Gourmet").</notes>
+<serves>Makes about 10 scones.</serves>
+<prep>Preheat oven to 200 deg C.</prep>
+
+<ingredients>
+<i><q>2 C</q><n>self-raising flour</n></i>
+<i><q>2 C</q><n>cheese, grated (plus extra cheese to top)</n></i>
+<i><q>1.25 C</q><n>milk</n></i>
+</ingredients>
+
+<method>
+<s>Combine the flour, cheese and any other seasoning ingredients you like.  Mix well.</s>
+<s>Add the milk - the dough will be quite wet.</s>
+<s>Shape into small loaves or balls, then sprinkle with extra cheese.</s>
+<s>Bake for 10 minutes, until well risen and crusty.</s>
+</method>
+
+</recipe>

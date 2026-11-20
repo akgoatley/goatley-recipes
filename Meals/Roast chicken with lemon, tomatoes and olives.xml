@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Roast chicken with lemon, tomatoes and olives</title>
+<notes>This is from Canvas magazine.</notes>
+<serves>Serves four.</serves>
+<prep>Preheat oven to 220 deg C.</prep>
+
+<ingredients>
+<i><q>8</q><n>chicken thigh fillets, boneless and skinless</n></i>
+<i><q>400 g</q><n>cherry tomatoes</n></i>
+<i><q>1 C</q><n>olives, pitted, mixed</n></i>
+<i><q>1 tsp</q><n>dried oregano (or 2 Tbs fresh, chopped)</n></i>
+<i><q>1/2</q><n>lemon, grated zest and juice</n></i>
+<i><q>2 Tbs</q><n>olive oil</n></i>
+<i><q>1 tsp</q><n>sea salt</n></i>
+<i><q>some</q><n>black pepper</n></i>
+</ingredients>
+
+<method>
+<s>Place the chicken thighs in a casserole dish and top with oregano, lemon juice and zest, a drizzle of olive oil, salt and cracked pepper.</s>
+<s>Surround the chicken with cherry tomatoes and olives.</s>
+<s>Bake for 30 minutes, until the chicken is cooked through.</s>
+<s>Serve with a leafy green salad and some crusty bread.</s>
+</method>
+
+</recipe>

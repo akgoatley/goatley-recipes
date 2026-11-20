@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Pikelets</title>
+<notes>This is Amy's Mum's recipe from a Sacred Heart cookbook.</notes>
+
+<ingredients>
+<i><q>2</q><n>eggs, beaten</n></i>
+<i><q>2 tsp</q><n>butter, melted</n></i>
+<i><q>1.5 C</q><n>flour</n></i>
+<i><q>1 heaped tsp</q><n>cream of tartar</n></i>
+<i><q>1 level tsp</q><n>baking soda</n></i>
+<i><q>0.5 tsp</q><n>salt</n></i>
+<i><q>0.5 C</q><n>sugar</n></i>
+<i><q>0.75 C</q><n>milk</n></i>
+</ingredients>
+
+<method>
+<s>Beat eggs and sugar, then add melted butter.</s>
+<s>Sift flour, cream of tartar, baking soda and salt together, then beat into other ingredients until thick and creamy.  If too thick, add a little cold water.</s>
+<s>Cook on greased griddle iron, taking care not to burn.</s>
+<s>Put on tea-towel or plate and keep covered.</s>
+</method>
+
+</recipe>

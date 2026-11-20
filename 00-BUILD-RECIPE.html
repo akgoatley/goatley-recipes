@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Build Recipe</title>
+
+<style type="text/css">
+	input.rStep {width: 90%;}
+	a#hiddenAnchor {display: none;}
+	input.ingredQ {width: 20%}
+	input.ingredN {width: 70%}
+</style>
+
+<script type="text/javascript"> 
+function Recipate() {
+	var output="";
+	output="<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<?xml-stylesheet type=\"text/css\" href=\"zz-recipe-style.css\"?>\n\n<recipe>\n"
+	output += "<title>" + document.getElementById("rTitle").value + "</title>\n";
+	if (document.getElementById("rNotes").value) {
+		output += "<notes>" + document.getElementById("rNotes").value + "</notes>\n";
+		}
+	if (document.getElementById("rServes").value) {
+		output += "<serves>" + document.getElementById("rServes").value + "</serves>\n";
+		}
+	if (document.getElementById("rPrep").value) {
+		output += "<prep>" + document.getElementById("rPrep").value + "</prep>\n";
+		}
+	output += "\n<ingredients>\n";
+	var ingredsArray = Array.from(document.getElementsByClassName("ingredRow"));
+		for (i=0; i<ingredsArray.length; i++) {
+		output += "<i><q>" + ingredsArray[i].children[1].value + "</q><n>" + ingredsArray[i].children[2].value + "</n></i>\n";
+		}
+	output += "</ingredients>\n\n";
+	output += "<method>\n";
+	var stepsArray = Array.from(document.getElementsByClassName("rStep"));
+		for (i=0; i<stepsArray.length; i++) {
+		output += "<s>" + stepsArray[i].value + "</s>\n";
+		}
+	output += "</method>\n\n</recipe>";
+	output = output.replaceAll("&","&amp;"); // escape ampersands
+	document.getElementById("output").value=output;
+}
+
+function addIngred() {
+	var rIngreds=document.getElementById("rIngredients");
+	var newRow=buildIngredRow();
+	rIngreds.appendChild(newRow);
+	newRow.childNodes[1].focus();
+	}
+
+function buildIngredRow() {
+	var newRow = document.createElement("div");
+	newRow.className="ingredRow";
+	var newMinus = document.createElement("input");
+	newMinus.type="button";
+	newMinus.value="x";
+	newMinus.onclick= function() {dropRow(this);};
+	newRow.appendChild(newMinus);
+	var newQ = document.createElement("input");
+	newQ.className="ingredQ";
+	newQ.type="text";
+	newRow.appendChild(newQ);
+	var newN = document.createElement("input");
+	newN.className="ingredN";
+	newN.type="text";
+	newRow.appendChild(newN);
+	return newRow;
+	}
+
+function addStep() {
+	var rMethod=document.getElementById("rMethod");
+	var newRow=buildStepRow();
+	rMethod.appendChild(newRow);
+	newRow.childNodes[1].focus();
+	}
+
+function buildStepRow() {
+	var newRow = document.createElement("div");
+	newRow.className="stepRow";
+	var newMinus = document.createElement("input");
+	newMinus.type="button";
+	newMinus.value="x";
+	newMinus.onclick= function() {dropRow(this);};
+	newRow.appendChild(newMinus);
+	var newS = document.createElement("input");
+	newS.className="rStep";
+	newS.type="text";
+	newRow.appendChild(newS);
+	return newRow;
+	}
+
+function dropRow(buttonElem) {
+	buttonElem.parentNode.remove();
+	}
+
+function saveRecipe() {
+	var rText = document.getElementById("output").value;
+	var myBlob = new Blob([rText], {type: "text/xml;charset=utf-8"});
+	var blobUrl = window.URL.createObjectURL(myBlob);
+	var link = document.getElementById("hiddenAnchor");
+	link.href = blobUrl;
+	link.download = document.getElementById("rTitle").value + ".xml";
+	link.click();
+	}
+
+function setupPage() {
+	document.getElementById('rTitle').focus();
+	window.addEventListener("keyup", (event) => {
+		if (event.key=="Enter") {
+			if (document.activeElement.className=="ingredN") {addIngred();}
+			if (document.activeElement.className=="rStep") {addStep();}
+			}
+		});
+	}
+
+</script>
+</head>
+
+<body onload="setupPage();">
+<h1>Build Recipe</h1>
+<a id="hiddenAnchor"></a>
+
+<input type="button" onclick="Recipate();" value="Produce recipe file" />
+<input type="button" onclick="saveRecipe();" value="Download recipe file" />
+<input type="button" onclick="location.reload();" value="Clear everything" />
+
+<table style="position: absolute; width: 98%; border-spacing: 1em; height: 80%">
+<tr style="width: 100%; height: 100%">
+<td style="width: 58%">
+<div id="builderArea" style="width: 100%; height: 100%">
+	<b>Title:</b><input type="text" id="rTitle" style="width: 80%; font-weight: bold"></input><br/>
+	<i>Notes:</i><input type="text" id="rNotes" style="width: 80%; font-style: italic"></input><br/>
+	Serves:<input type="text" id="rServes" style="width: 80%;"></input><br/>
+	Prep:<input type="text" id="rPrep" style="width: 80%;"></input><br/><br/>
+	Ingredients (quantity, then name):
+	<div id="rIngredients">
+		<div class="ingredRow">
+			<input type="button" onclick="dropRow(this);" value="x" /><input type="text" class="ingredQ"/><input type="text" class="ingredN" />
+			</div>
+		</div>
+	<input type="button" onclick="addIngred();" value="Add another ingredient" /><br/><br/>
+	Method:
+	<div id="rMethod">
+		<div class="stepRow">
+			<input type="button" onclick="dropRow(this);" value="x" /><input type="text" class="rStep"/>
+		</div>
+	</div>
+<input type="button" onclick="addStep();" value="Add another step" />
+</td>
+<td style="width:38%; cellspacing: 1em">
+<textarea id="output" style="width: 100%; height: 100%">
+</textarea>
+</td>
+</tr>
+</table>
+
+
+
+</body>
+</html>

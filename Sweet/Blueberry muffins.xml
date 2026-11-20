@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Blueberry muffins</title>
+<notes>This recipe is from Amy's Auntie Kathie.</notes>
+<serves>Makes 12 standard muffins.</serves>
+<prep>Preheat oven to 190 deg C.</prep>
+
+<ingredients>
+<i><q>2 C</q><n>flour</n></i>
+<i><q>1 Tbs</q><n>baking powder</n></i>
+<i><q>2 tsp</q><n>custard powder</n></i>
+<i><q>1 C</q><n>sugar</n></i>
+<i><q>2</q><n>eggs</n></i>
+<i><q>0.75 C</q><n>blueberries</n></i>
+<i><q>0.75 C</q><n>milk</n></i>
+<i><q>0.75 C</q><n>oil (rice bran is good)</n></i>
+</ingredients>
+
+<method>
+<s>Sift flour, baking powder and custard powder into a bowl.</s>
+<s>Add sugar and berries.</s>
+<s>In a separate bowl mix the eggs, milk and oil.</s>
+<s>Add the wet to the dry ingredients.</s>
+<s>Bake at 190 deg C for 15 to 20 minutes.</s>
+</method>
+
+</recipe>

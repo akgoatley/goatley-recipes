@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Bolognese</title>
+<notes>This is a BBC Food recipe.</notes>
+<serves>Serves 12.</serves>
+<prep>Set up both slow cookers (it is too big for one).</prep>
+
+<ingredients>
+<i><q>4 tbsp</q><n>olive oil</n></i>
+<i><q>1.5kg </q><n>beef mince</n></i>
+<i><q>4</q><n>onions, finely chopped</n></i>
+<i><q>3 </q><n>carrots, finely chopped</n></i>
+<i><q>4 </q><n>celery sticks, finely chopped</n></i>
+<i><q>8 </q><n>garlic cloves, crushed</n></i>
+<i><q>500g</q><n>mushrooms, sliced</n></i>
+<i><q>4</q><n>400g cans chopped tomatoes</n></i>
+<i><q>6 tbsp</q><n>tomato puree</n></i>
+<i><q>2 tbsp</q><n>dried mixed herbs</n></i>
+<i><q>2 </q><n>bay leaves</n></i>
+<i><q>large glass</q><n>red wine (optional)</n></i>
+<i><q>4 tbsp</q><n>red wine vinegar</n></i>
+<i><q>1 tbsp</q><n>sugar</n></i>
+</ingredients>
+
+<method>
+<s>Heat the oil in a large pan and brown the mince in batches, then add to slow cookers.</s>
+<s>Add the remaining ingredients to the slow cookers.  Cover and cook on low for 6-8 hours, then uncover and turn to high for another hour until thick and saucy.</s>
+<s>Serve with cooked spaghetti and grated parmesan, plus some seasonal veges.</s>
+</method>
+
+</recipe>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Cheese puffs</title>
+<notes>This is Mum's recipe, which I used to make with her when I was a kid.</notes>
+<prep>Preheat oven to 230 deg C.</prep>
+
+<ingredients>
+<i><q>2 C</q><n>flour</n></i>
+<i><q>2 tsp</q><n>baking powder</n></i>
+<i><q>1/2 tsp</q><n>salt</n></i>
+<i><q>dash</q><n>pepper</n></i>
+<i><q>1 C</q><n>grated cheese</n></i>
+<i><q>1 C</q><n>milk</n></i>
+</ingredients>
+
+<method>
+<s>Sift dry ingredients together.  Add cheese and mix.</s>
+<s>Pour in milk, then quickly stir into a moist dough.</s>
+<s>Put large spoonfuls into greased muffin tins.</s>
+<s>Bake at 230 deg C for around 10 minutes.</s>
+</method>
+
+</recipe>

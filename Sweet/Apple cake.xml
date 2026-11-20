@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Apple cake</title>
+<notes>This recipe comes from Jim Bolger, former Prime Minister, via a fundraising recipe book that Amy's mum had.</notes>
+<prep>Preheat oven to 180 deg C.  Grease and flour a ring tin.</prep>
+
+<ingredients>
+<i><q>1 C</q><n>sugar</n></i>
+<i><q>1.75 C</q><n>apple, diced</n></i>
+<i><q>125 g</q><n>butter, melted</n></i>
+<i><q>1</q><n>egg</n></i>
+<i><q>1.5 C</q><n>flour</n></i>
+<i><q>1 tsp</q><n>baking soda</n></i>
+<i><q>0.5 tsp</q><n>salt</n></i>
+<i><q>1 tsp</q><n>cinnamon</n></i>
+<i><q>0.5 tsp</q><n>nutmeg</n></i>
+<i><q>0.5 tsp</q><n>allspice</n></i>
+<i><q>0.5 C</q><n>raisins</n></i>
+<i><q>0.5 C</q><n>walnuts, chopped</n></i>
+</ingredients>
+
+<method>
+<s>Sprinkle the sugar over the apple.</s>
+<s>Add melted butter and egg, then dry ingredients - adding the raisins and walnuts last.</s>
+<s>Pour into greased and floured ring tin.</s>
+<s>Bake at 180 deg C for 40 minutes (50 minutes if not baked in a ring tin).</s>
+<s>Once cooked, leave in the tin for 10-15 minutes before removing.</s>
+<s>Dust with icing sugar and serve with yoghurt.</s>
+</method>
+
+</recipe>

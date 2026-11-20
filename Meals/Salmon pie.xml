@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Salmon pie</title>
+<notes>This recipe is from Anne Cunniffe, who made it when Amy was a girl.</notes>
+<serves>Serves four to six.</serves>
+<prep>Preheat oven to 180 deg C and boil a full kettle (for mashed potatoes).</prep>
+
+<ingredients>
+<i><q>1</q><n>medium tin salmon</n></i>
+<i><q>1</q><n>egg</n></i>
+<i><q>2/3 of 440 g tin</q><n>creamed sweetcorn</n></i>
+<i><q>1 C</q><n>milk</n></i>
+<i><q>3 Tbs</q><n>butter</n></i>
+<i><q>2 C</q><n>mashed potato</n></i>
+<i><q>3 Tbs</q><n>flour</n></i>
+<i><q>some</q><n>salt and pepper</n></i>
+<i><q>some</q><n>parsley, chopped</n></i>
+<i><q>some</q><n>cheese, grated (to top)</n></i>
+</ingredients>
+
+<method>
+<s>Prepare the mashed potato.</s>
+<s>Melt butter and blend in flour.  Gradually add milk and cook over a low heat, stirring constantly until thick and boiling.</s>
+<s>Remove from heat, add salt and pepper and a little chopped parsley.</s>
+<s>Drain salmon and chop roughly.</s>
+<s>Beat egg into sauce, then add salmon and corn.</s>
+<s>Pour into ovenproof dish and top with mashed potato, then grated cheese.</s>
+<s>Fan bake at 180 deg C until potato is golden and sauce is bubbling - about 30 mins.</s>
+</method>
+
+</recipe>

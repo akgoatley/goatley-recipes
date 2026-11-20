@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Pizza dough</title>
+<notes>This is Annabel Langbein's recipe.</notes>
+<serves>Makes four pizza bases.</serves>
+<prep>Preheat oven to 240 deg C.</prep>
+
+<ingredients>
+<i><q>2 C</q><n>warm water</n></i>
+<i><q>2 tsp</q><n>white sugar</n></i>
+<i><q>2 tsp</q><n>dry yeast</n></i>
+<i><q>5 C</q><n>high-grade flour, plus more for kneading</n></i>
+<i><q>2 Tbs</q><n>olive oil</n></i>
+<i><q>1 tsp</q><n>salt</n></i>
+</ingredients>
+
+<method>
+<s>Dissolve sugar in water.  Sprinkle yeast over the top and allow to stand in a warm place for ten minutes.</s>
+<s>Mix in flour, oil and salt and combine evenly into a soft dough.</s>
+<s>Knead on a very lightly floured surface for five minutes, including throwing the dough, until smooth and a little sticky.</s>
+<s>Transfer to a lightly oiled bowl, cover and leave to rise in a warm place until doubled in size (around 30 to 40 minutes).</s>
+<s>Turn out onto a lightly floured surface, roll into a log shape and cut into four pieces.</s>
+<s>Roll into balls and leave to rise for 15 minutes.</s>
+<s>Roll out thinly on baking paper, add toppings and bake (still on the baking paper) on a preheated pizza stone or oven tray, at 240 deg C for around 10 to 12 minutes, or until base is crispy and golden.</s>
+</method>
+
+</recipe>

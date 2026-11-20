@@ -1,0 +1,60 @@
+recipe {
+	display: block;
+	margin: 1em 2em;
+}
+
+title {
+	display: block;
+	font-weight: bold;
+}
+
+notes {
+	display: block;
+	font-style: italic;
+	margin: 1em 0;
+}
+
+serves {
+	display: block;
+	margin: 1em 0;
+}
+
+prep {
+	display: block;
+	margin: 1em 0;
+}
+
+ingredients {
+	display: block;
+	border-top: 1px solid black;
+	padding-top: 1em;
+	margin: 1em 0;
+}
+
+i {
+	display: table-row;
+}
+
+q {
+	display: table-cell;
+	padding: 0.3em 2em 0 0;
+}
+
+n {
+	display: table-cell;
+}
+
+method {
+	display: block;
+	border-top: 1px solid black;
+	padding-bottom: 1em;
+	border-bottom: 1px solid black;
+	margin: 1em 0 2em 0;
+}
+
+s {
+	display: list-item;
+	margin: 1em 0 0 1em;
+	padding-left: 1em;
+	list-style-type: decimal;
+}

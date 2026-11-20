@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Corned beef</title>
+<notes>This is an Edmonds Cooking recipe.</notes>
+
+<ingredients>
+<i><q>1.5 - 2 kg</q><n>corned silverside</n></i>
+<i><q>1</q><n>onion, peeled and halved</n></i>
+<i><q>1 Tbs</q><n>malt vinegar</n></i>
+<i><q>10</q><n>black peppercorns</n></i>
+<i><q>1</q><n>bay leaf</n></i>
+<i><q>2 - 3 sprigs</q><n>parsley and thyme (optional)</n></i>
+<i><q>2 Tbs</q><n>brown sugar or golden syrup</n></i>
+<i><q>1</q><n>carrot, cut into chunks (optional)</n></i>
+</ingredients>
+
+<method>
+<s>Put all ingredients into a saucepan or slow cooker and cover with cold water.</s>
+<s>Bring to a simmer and cook, covered, for 30 minutes per 500 g meat, or until tender when tested with a fine skewer.</s>
+<s>Let the meat sit in its liquid for 20 minutes, then slice thickly to serve warm.</s>
+<s>If serving cold, let it cool in the liquid then remove and slice thinly.</s>
+</method>
+
+</recipe>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Banana pikelets</title>
+<notes>This recipe is from Nadia Lim's book, 'Yum!'</notes>
+<serves>Makes six pikelets or two pancakes.  Multiply by the number of people.</serves>
+
+<ingredients>
+<i><q>1 per person</q><n>banana, large, ripe</n></i>
+<i><q>1 per person</q><n>egg</n></i>
+<i><q>2 Tbs per person</q><n>flour</n></i>
+<i><q>1/4 tsp per person</q><n>baking powder</n></i>
+</ingredients>
+
+<method>
+<s>Mash banana well with a fork until there are no lumps.</s>
+<s>Whisk in egg, flour and baking powder.</s>
+<s>Cook in a lightly buttered pan for 1-2 minutes each side.  Flip when bubbles start appearing on the surface.</s>
+</method>
+
+</recipe>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Banana cake</title>
+<notes>This recipe is from the Edmonds cookbook.</notes>
+
+<ingredients>
+<i><q>125 g</q><n>butter, softened</n></i>
+<i><q>3/4 C</q><n>white sugar</n></i>
+<i><q>2</q><n>eggs</n></i>
+<i><q>1.5 - 2 C</q><n>ripe bananas (3 or 4 depending on size)</n></i>
+<i><q>1 tsp</q><n>baking soda</n></i>
+<i><q>2 Tbs</q><n>hot milk</n></i>
+<i><q>2 C</q><n>standard grade plain flour</n></i>
+<i><q>1 tsp</q><n>baking powder</n></i>
+</ingredients>
+
+<method>
+<s>Cream butter and sugar until light and fluffy.  Add eggs one at a time, 
+beating well after each addition.  Add mashed banana and stir thoroughly.</s>
+<s>Stir baking soda into hot milk and add to creamed mixture.</s>
+<s>Sift flour and baking powder.  Fold into mixture.</s>
+<s>Turn into a greased and lined 20 cm round cake tin (a ring tin works well).</s>
+<s>Bake at 180 deg C (not fan bake) for 50 minutes or until cake springs back when lightly touched.</s>
+<s>Leave in tin for 10 minutes before turning out onto a wire rack.</s>
+<s>Leave to cool, then ice with cream cheese icing.</s>
+</method>
+
+<title>Lemon cream cheese icing</title>
+<notes>This recipe is by Annabel Langbein.</notes>
+
+<ingredients>
+<i><q>100 g</q><n>butter, at room temperature</n></i>
+<i><q>150 g</q><n>cream cheese</n></i>
+<i><q>3 C</q><n>icing sugar</n></i>
+<i><q>pinch</q><n>salt</n></i>
+<i><q>2.5 Tbs</q><n>lemon juice</n></i>
+</ingredients>
+
+<method>
+<s>Blend butter and cream cheese in a bowl or food processor until smooth.</s>
+<s>Beat in icing sugar and salt, using extra icing sugar or a little water if necessary to achieve a 
+spreadable yet firm consistency.</s>
+<s>Spread over cake.</s>
+</method>
+
+</recipe>

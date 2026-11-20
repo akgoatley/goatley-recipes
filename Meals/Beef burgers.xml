@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Beef burgers</title>
+<notes>This is Annabel Langbein's "Ultimate Beef Burgers" recipe.</notes>
+<serves>Serves four.</serves>
+
+<ingredients>
+<i><q>500 g</q><n>lean beef mince</n></i>
+<i><q>1</q><n>onion, small, finely diced</n></i>
+<i><q>1</q><n>egg, lightly beaten</n></i>
+<i><q>clove</q><n>garlic, crushed</n></i>
+<i><q>1 Tbs</q><n>Worcestershire sauce</n></i>
+<i><q>1 Tbs</q><n>tomato sauce</n></i>
+<i><q>1 Tbs</q><n>Dijon mustard</n></i>
+<i><q>0.5 tsp</q><n>salt</n></i>
+<i><q>to taste</q><n>black pepper</n></i>
+<i><q>2 Tbs</q><n>oil, to cook</n></i>
+<i><q>some</q><n>cheese or blue cheese, sliced</n></i>
+</ingredients>
+
+<method>
+<s>Mix patty ingredients until combined.</s>
+<s>Divide into four, roll into balls, then press into patties about 10 cm diameter.</s>
+<s>Patties can be chilled or frozen until needed.</s>
+<s>Preheat a barbecue hotplate or heavy frying pan over high heat.</s>
+<s>Add oil and cook patties for 2 minutes until well browned.</s>
+<s>Turn, top with a slice of cheese (if using) and cook another 2 minutes until cooked through.</s>
+</method>
+
+</recipe>

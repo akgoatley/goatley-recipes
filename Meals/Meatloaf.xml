@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Meatloaf</title>
+<notes>This recipe came from Amy's mum.</notes>
+<serves>Serves six.</serves>
+<prep>Preheat oven to 180 deg C.</prep>
+
+<ingredients>
+<i><q>500 g</q><n>mince</n></i>
+<i><q>500 g</q><n>sausage meat</n></i>
+<i><q>2</q><n>onions, finely diced</n></i>
+<i><q>1</q><n>egg</n></i>
+<i><q>1 Tbs</q><n>curry powder</n></i>
+<i><q>2 sprigs</q><n>parsley, chopped</n></i>
+<i><q>3/4 C</q><n>breadcrumbs</n></i>
+<i><q>1/2 C</q><n>milk</n></i>
+<i><q>1/2 C</q><n>water</n></i>
+</ingredients>
+
+<method>
+<s>Combine mince, sausage meat, onion, egg, curry powder and parsley.  Mix well.</s>
+<s>Add breadcrumbs.</s>
+<s>Gradually add milk and water, mixing well.</s>
+<s>Mould into a loaf and place into a greased baking dish or silicone mould.</s>
+<s>Fan bake for 75 minutes.</s>
+</method>
+
+</recipe>

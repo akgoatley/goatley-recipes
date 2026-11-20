@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/css" href="zz-recipe-style.css"?>
+
+<recipe>
+<title>Chocolate mousse</title>
+<serves>Makes 400 mL.</serves>
+
+<ingredients>
+<i><q>100 g</q><n>dark chocolate, over 50% cocoa content</n></i>
+<i><q>2</q><n>eggs, separated</n></i>
+<i><q>2 tsp</q><n>castor sugar</n></i>
+</ingredients>
+
+<method>
+<s>Melt chocolate over a bain marie.</s>
+<s>Remove from heat and beat in the egg yolks, one at a time.</s>
+<s>Stir until the mixture is glossy and smooth.</s>
+<s>Separately, beat the egg whites until soft peaks form.</s>
+<s>Add sugar to egg whites and stir until dissolved.</s>
+<s>Combine the two mixtures.</s>
+<s>Chill until set.</s>
+<s>Serve at room temperature.</s>
+</method>
+
+</recipe>
